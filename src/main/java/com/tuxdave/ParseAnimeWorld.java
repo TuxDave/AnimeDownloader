@@ -34,8 +34,12 @@ public class ParseAnimeWorld{
     public String[] getOtherEpisodesLink(){
         String[] s = new String[nEpisodes];
         Elements els = page.getElementsByAttributeValue("data-title","0");
-        for(int i = 0; i < nEpisodes; i++){
-            s[i] = "https://www.animeworld.tv" + els.get(i).attr("href");
+        for(int i = 0; i < nEpisodes+1; i++){
+            if(i > 1){
+                s[i-1] = "https://www.animeworld.tv" + els.get(i).attr("href");
+            }else{
+                s[0] = "https://www.animeworld.tv" + els.get(i).attr("href");
+            }
         }
         return s;
     }
@@ -54,7 +58,7 @@ public class ParseAnimeWorld{
         String[] downloadLinks = new String[nEpisodes];
         for(; current < nEpisodes; current++){
             ParseAnimeWorld parser = new ParseAnimeWorld(urlsEpisodes[current]);
-            downloadLinks[current] = getCurrentDownloadLink();
+            downloadLinks[current] = parser.getCurrentDownloadLink();
             System.out.println("[INFO] - Episodio " + Integer.toString(current + 1) + " trovato!");
         }
         return downloadLinks;
