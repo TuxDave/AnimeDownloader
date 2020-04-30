@@ -21,6 +21,11 @@
             <version>1.13.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.TuxDave</groupId>
+            <artifactId>JTuxObjects</artifactId>
+            <version>2.1</version>
+        </dependency>
     </dependencies>
 
     <build>
