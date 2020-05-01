@@ -257,4 +257,13 @@ public class AnimeDownloader extends JFrame {
 
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println("---AnimeDownloader---\n\n");
+
+        AnimeDownloader a = new AnimeDownloader();
+        a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        a.setVisible(true);
+        a.pack();
+    }
 }

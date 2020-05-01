@@ -6,7 +6,7 @@
 
     <groupId>com.tuxdave</groupId>
     <artifactId>AnimeDownloader</artifactId>
-    <version>0.1</version>
+    <version>0.2-ALPHA</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -45,7 +45,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.tuxdave.ParseAnimeWorld</mainClass>
+                            <mainClass>com.tuxdave.AnimeDownloader</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
