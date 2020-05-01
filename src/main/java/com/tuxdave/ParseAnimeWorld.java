@@ -10,9 +10,11 @@ import java.io.IOException;
 public class ParseAnimeWorld{
     private String url;
     private String[] urlsEpisodes;
+    private String[] downloadLinks = null;
     private int nEpisodes;
     private int current;
     private Document page;
+    private boolean scraping = false;
 
     public ParseAnimeWorld(String _url)throws IOException {
         url = _url;
@@ -44,6 +46,10 @@ public class ParseAnimeWorld{
         return s;
     }
 
+    public boolean isScraping(){
+        return scraping;
+    }
+
     public String getCurrentDownloadLink(){
         Elements es = page.body().getElementsByAttributeValue("id","downloadLink");
         for(Element e : es){
@@ -54,22 +60,37 @@ public class ParseAnimeWorld{
         return "";
     }
 
-    public String[] getAllEpisodeDownloadLink()throws IOException{
-        String[] downloadLinks = new String[nEpisodes];
-        for(; current < nEpisodes; current++){
-            ParseAnimeWorld parser = new ParseAnimeWorld(urlsEpisodes[current]);
-            downloadLinks[current] = parser.getCurrentDownloadLink();
-            System.out.println("[INFO] - Episodio " + Integer.toString(current + 1) + " trovato!");
-        }
+    public int getCurrent(){
+        return current;
+    }
+
+    public void scrapeAllEpisodeDownloadLink()throws IOException{
+        downloadLinks = new String[nEpisodes];
+        scraping = true;
+        Thread t1 = new Work();
+        t1.start();
+    }
+
+    public String[] getAllEpisodeDownloadLink(){
         return downloadLinks;
     }
-    /*
-    Elements es = page.body().getElementsByAttributeValue("id","downloadLink");
-        for(Element e : es){
-            if(e.html().contains("Alternativo") || e.html().contains("Alternative")){
-                String a = e.attr("href");
-                System.out.println(a);
+
+    private class Work extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            downloadLinks = new String[nEpisodes];
+            scraping = true;
+            for(; current < nEpisodes; current++){
+                try {
+                    ParseAnimeWorld parser = new ParseAnimeWorld(urlsEpisodes[current]);
+                    downloadLinks[current] = parser.getCurrentDownloadLink();
+                    System.out.println("[INFO] - Episodio " + Integer.toString(current + 1) + " trovato!");
+                } catch (IOException e) {
+                }
             }
+            scraping = false;
         }
-    */
+    }
+
 }
