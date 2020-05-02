@@ -23,12 +23,13 @@ public class AnimeDownloader extends JFrame {
     private JLabel info1;
     private JTextArea showLinkArea;
     private JButton copiaButton;
-    private JButton salvaLinksSuFileButton;
+    private JButton saveButton;
     private JPlaceHolderTextField linkEdit;
-    private JButton downloadEpisodiComingSoonButton;
+    private JButton downloadButton;
     private JProgressBar progressBar1;
     private JButton findEpisodesButton;
     private JScrollPane scrollPane;
+    private JTextPane info4;
 
     private boolean working = false;
 
@@ -80,24 +81,27 @@ public class AnimeDownloader extends JFrame {
         info3.setText("https://www.animeworld.tv/");
         panel1.add(info3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        salvaLinksSuFileButton = new JButton();
-        Font salvaLinksSuFileButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, salvaLinksSuFileButton.getFont());
-        if (salvaLinksSuFileButtonFont != null) salvaLinksSuFileButton.setFont(salvaLinksSuFileButtonFont);
-        salvaLinksSuFileButton.setText("Salva links su file! (Coming Soon)");
-        panel2.add(salvaLinksSuFileButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        saveButton = new JButton();
+        Font saveButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, saveButton.getFont());
+        if (saveButtonFont != null) saveButton.setFont(saveButtonFont);
+        saveButton.setText("Salva links su file! (Coming Soon)");
+        panel2.add(saveButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         copiaButton = new JButton();
         Font copiaButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, copiaButton.getFont());
         if (copiaButtonFont != null) copiaButton.setFont(copiaButtonFont);
         copiaButton.setText("Copia!");
         panel2.add(copiaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        downloadEpisodiComingSoonButton = new JButton();
-        Font downloadEpisodiComingSoonButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadEpisodiComingSoonButton.getFont());
-        if (downloadEpisodiComingSoonButtonFont != null)
-            downloadEpisodiComingSoonButton.setFont(downloadEpisodiComingSoonButtonFont);
-        downloadEpisodiComingSoonButton.setText("Download Episodi(Coming Soon)");
-        panel2.add(downloadEpisodiComingSoonButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        downloadButton = new JButton();
+        Font downloadButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadButton.getFont());
+        if (downloadButtonFont != null) downloadButton.setFont(downloadButtonFont);
+        downloadButton.setText("Download Episodi(Coming Soon)");
+        panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        info4 = new JTextPane();
+        info4.setBackground(new Color(-4390921));
+        info4.setText("Info: ");
+        panel2.add(info4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 300), new Dimension(150, 50), null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         progressBar1 = new JProgressBar();
@@ -151,8 +155,16 @@ public class AnimeDownloader extends JFrame {
     }
 
     {//insert listeners
-        info3.addMouseListener(new AnimeDownloaderListener());
-        findEpisodesButton.addActionListener(new AnimeDownloaderListener());
+        AnimeDownloaderListener listener = new AnimeDownloaderListener();
+        findEpisodesButton.addActionListener(listener);
+        findEpisodesButton.addMouseListener(listener);
+        copiaButton.addMouseListener(listener);
+        saveButton.addMouseListener(listener);
+        downloadButton.addMouseListener(listener);
+        progressBar1.addMouseListener(listener);
+        linkEdit.addMouseListener(listener);
+        info3.addMouseListener(listener);
+        showLinkArea.addMouseListener(listener);
     }
 
     private class AnimeDownloaderListener implements ActionListener, MouseListener {
@@ -249,12 +261,30 @@ public class AnimeDownloader extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent mouseEvent) {
-
+            if (mouseEvent.getSource() == findEpisodesButton) {
+                info4.setText("Info: Scarica i link dai quali scaricare tutti gli episodi dell'anime desiderato.");
+            } else if (mouseEvent.getSource() == copiaButton) {
+                info4.setText("Info: Copia in memoria tutti i link per poterli incollare all'interno di un download manager (es: downloadBox remota).");
+            } else if (mouseEvent.getSource() == saveButton) {
+                info4.setText("Info: Chiede dove salvare i link per il download degli episodi e di conseguenza li salva in un file chiamato \"nome-anime-links.txt\"");
+            } else if (mouseEvent.getSource() == downloadButton) {
+                info4.setText("Info: Chiede dove salvare gli episodi da scaricare, e li scarica nella posizione desiderata.");
+            } else if (mouseEvent.getSource() == linkEdit) {
+                info4.setText("Incollare qui il link della pagina di AnimeWorld.tv dell'Anime desiderato.");
+            } else if (mouseEvent.getSource() == linkEdit) {
+                info4.setText("Incollare qui il link della pagina di AnimeWorld.tv dell'Anime desiderato.");
+            } else if (mouseEvent.getSource() == info3) {
+                info4.setText("Info: Posta alla pagina AnimeWorld.tv per scegliere l'anime da scaricare e copiare l'URL.");
+            } else if (mouseEvent.getSource() == progressBar1) {
+                info4.setText("Info: Indica la percentuale di completamento di download dei link o degli episodi.");
+            } else if (mouseEvent.getSource() == showLinkArea) {
+                info4.setText("Info: Qui compariranno i link per il download di tutti gli episodi dell'anime indicato sopra, possono essere copiati, salvati o scaricati sul computer.");
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent mouseEvent) {
-
+            info4.setText("");
         }
     }
 
