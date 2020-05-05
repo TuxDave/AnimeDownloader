@@ -7,6 +7,10 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Desktop;
@@ -159,6 +163,7 @@ public class AnimeDownloader extends JFrame {
         findEpisodesButton.addActionListener(listener);
         findEpisodesButton.addMouseListener(listener);
         copiaButton.addMouseListener(listener);
+        copiaButton.addActionListener(listener);
         saveButton.addMouseListener(listener);
         downloadButton.addMouseListener(listener);
         progressBar1.addMouseListener(listener);
@@ -232,6 +237,12 @@ public class AnimeDownloader extends JFrame {
                     linkEdit.setBackground(Color.RED);
                 }
                 working = false;
+            }
+            if (actionEvent.getSource() == copiaButton) {
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+                        new StringSelection(showLinkArea.getText()),
+                        null
+                );
             }
         }
 

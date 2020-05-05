@@ -18,7 +18,7 @@ public class ParseAnimeWorld{
 
     public ParseAnimeWorld(String _url)throws IOException {
         url = _url;
-        page = Jsoup.connect(url).userAgent("Mozzilla").get();
+        page = Jsoup.connect(url).userAgent("Mozilla").get();
         nEpisodes = getEpisodesNumber();
         current = 0;
         urlsEpisodes = getOtherEpisodesLink();
