@@ -93,7 +93,7 @@ public class AnimeDownloader extends JFrame {
         saveButton = new JButton();
         Font saveButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, saveButton.getFont());
         if (saveButtonFont != null) saveButton.setFont(saveButtonFont);
-        saveButton.setText("Salva links su file! (Coming Soon)");
+        saveButton.setText("Salva links su file!");
         panel2.add(saveButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         copiaButton = new JButton();
         Font copiaButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, copiaButton.getFont());
