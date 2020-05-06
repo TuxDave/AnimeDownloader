@@ -6,7 +6,7 @@
 
     <groupId>com.tuxdave</groupId>
     <artifactId>AnimeDownloader</artifactId>
-    <version>0.3-ALPHA</version>
+    <version>0.5-ALPHA</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
