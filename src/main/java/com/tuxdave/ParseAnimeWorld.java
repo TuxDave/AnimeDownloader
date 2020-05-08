@@ -1,11 +1,14 @@
 package com.tuxdave;
 
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class ParseAnimeWorld{
     private String url;
@@ -15,6 +18,9 @@ public class ParseAnimeWorld{
     private int current;
     private Document page;
     private boolean scraping = false;
+
+    static private boolean downloading = false;
+    static private int currentDownloading = 0;
 
     public ParseAnimeWorld(String _url)throws IOException {
         url = _url;
@@ -75,6 +81,13 @@ public class ParseAnimeWorld{
         return downloadLinks;
     }
 
+    public static boolean isDownloading(){
+        return downloading;
+    }
+    public static int getCurrentDownloading(){
+        return currentDownloading + 1;
+    }
+
     private class Work extends Thread{
         @Override
         public void run() {
@@ -90,6 +103,53 @@ public class ParseAnimeWorld{
                 }
             }
             scraping = false;
+        }
+    }
+
+    public static class EpisodesDownloader extends Thread{//suportati solo file MP4,
+
+        //variabili in aggiunta a quelle di thread
+        String[] episodelinks = null;
+        String downloadFolderPath = null;
+        String animeName = null;
+        int nEpisodes = 0;
+        int start = 0;
+
+        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName, int _start){
+            super();
+            currentDownloading = 0;//azzera il counter dei downloads
+            episodelinks = _episodeLinks;
+            downloadFolderPath = _downloadFolderPath;
+            if(downloadFolderPath.toCharArray()[downloadFolderPath.length() - 1] != '/'){//controllo sulla path
+                downloadFolderPath += '/';
+            }
+            animeName = _animeName;
+            nEpisodes = episodelinks.length;
+            if(_start <= nEpisodes && _start > 0){
+                start = _start;
+            }else{
+                start = 1;
+            }
+            start--;
+        }
+        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName){
+            this(_episodeLinks, _downloadFolderPath, _animeName, 0);
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            downloading = true;
+            for(; start < nEpisodes; start++){
+                currentDownloading = start;
+                try {
+                    FileUtils.copyURLToFile(new URL(episodelinks[start]), new File(downloadFolderPath + animeName + "_ep" + (start+1) + ".mp4"), 20000,20000);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            downloading = false;
+            currentDownloading = 0;
         }
     }
 

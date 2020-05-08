@@ -101,8 +101,10 @@ public class AnimeDownloader extends JFrame {
         copiaButton.setText("Copia!");
         panel2.add(copiaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         downloadButton = new JButton();
+        downloadButton.setEnabled(false);
         Font downloadButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadButton.getFont());
         if (downloadButtonFont != null) downloadButton.setFont(downloadButtonFont);
+        downloadButton.setHideActionText(false);
         downloadButton.setText("Download Episodi(Coming Soon)");
         panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         info4 = new JTextPane();
@@ -123,6 +125,7 @@ public class AnimeDownloader extends JFrame {
         Font showLinkAreaFont = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, showLinkArea.getFont());
         if (showLinkAreaFont != null) showLinkArea.setFont(showLinkAreaFont);
         showLinkArea.setLineWrap(false);
+        showLinkArea.setOpaque(true);
         showLinkArea.setText("");
         scrollPane.setViewportView(showLinkArea);
     }
@@ -207,6 +210,7 @@ public class AnimeDownloader extends JFrame {
                         new Thread() {
                             @Override
                             public void run() {
+                                downloadButton.setEnabled(false);
                                 super.run();
                                 while (parser.isScraping()) {
                                     progressBar1.setValue(parser.getCurrent() * 100 / parser.getEpisodes());
@@ -221,6 +225,7 @@ public class AnimeDownloader extends JFrame {
                                     showLinkArea.append(s1 + "\n");
                                 }
                                 progressBar1.setValue(100);
+                                downloadButton.setEnabled(true);
                             }
                         }.start();
                     }
@@ -257,7 +262,7 @@ public class AnimeDownloader extends JFrame {
                 chooser.setVisible(true);
                 chooser.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent actionEvent) {//todo:testare bene
+                    public void actionPerformed(ActionEvent actionEvent) {
                         FileWriter fw = null;
                         try {
                             fw = new FileWriter(chooser.getSelectedFile());
@@ -282,10 +287,8 @@ public class AnimeDownloader extends JFrame {
             if (mouseEvent.getSource() == info3) {
                 try {
                     Desktop.getDesktop().browse(new URI(info3.getText()));
-                } catch (IOException e) {//todo: modificare per non crashare
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                } catch (IOException | URISyntaxException e) {
+                    //todo: Mettere qui un dialog per chiedere se si ha un browser predefinito
                 }
             }
         }
