@@ -114,8 +114,9 @@ public class ParseAnimeWorld{
         String animeName = null;
         int nEpisodes = 0;
         int start = 0;
+        int stop = 0;
 
-        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName, int _start){
+        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName, int _start, int _stop){
             super();
             currentDownloading = 0;//azzera il counter dei downloads
             episodelinks = _episodeLinks;
@@ -131,16 +132,21 @@ public class ParseAnimeWorld{
                 start = 1;
             }
             start--;
+            if(_stop > start && _stop <= nEpisodes){
+                stop = _stop;
+            }else{
+                stop = nEpisodes;
+            }
         }
         public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName){
-            this(_episodeLinks, _downloadFolderPath, _animeName, 0);
+            this(_episodeLinks, _downloadFolderPath, _animeName, 0, _episodeLinks.length);
         }
 
         @Override
         public void run() {
             super.run();
             downloading = true;
-            for(; start < nEpisodes; start++){
+            for(; start < stop; start++){
                 currentDownloading = start;
                 try {
                     FileUtils.copyURLToFile(new URL(episodelinks[start]), new File(downloadFolderPath + animeName + "_ep" + (start+1) + ".mp4"), 20000,20000);

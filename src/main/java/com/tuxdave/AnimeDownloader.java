@@ -280,6 +280,11 @@ public class AnimeDownloader extends JFrame {
                 f.pack();
                 f.setVisible(true);
             }
+            if (actionEvent.getSource() == downloadButton && !ParseAnimeWorld.isDownloading()) {
+                DownloadSelector ds = new DownloadSelector();
+                String path = ds.getPath();
+                //todo: inserire lo slider per decidedre quanti episodi scaricare... (da creare nel JTuxComponent)
+            }
         }
 
         @Override
