@@ -1,23 +1,19 @@
 package com.tuxdave;
 
-import JComponents.JPlaceHolderTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.tuxdave.JComponents.JPlaceHolderTextField;
+import com.tuxdave.JComponents.JRangePicker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
@@ -105,7 +101,7 @@ public class AnimeDownloader extends JFrame {
         Font downloadButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadButton.getFont());
         if (downloadButtonFont != null) downloadButton.setFont(downloadButtonFont);
         downloadButton.setHideActionText(false);
-        downloadButton.setText("Download Episodi(Coming Soon)");
+        downloadButton.setText("Download Episodi");
         panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         info4 = new JTextPane();
         info4.setBackground(new Color(-4390921));
@@ -174,6 +170,7 @@ public class AnimeDownloader extends JFrame {
         saveButton.addActionListener(listener);
         saveButton.addMouseListener(listener);
         downloadButton.addMouseListener(listener);
+        downloadButton.addActionListener(listener);
         progressBar1.addMouseListener(listener);
         linkEdit.addMouseListener(listener);
         info3.addMouseListener(listener);
@@ -184,14 +181,6 @@ public class AnimeDownloader extends JFrame {
 
         private ParseAnimeWorld parser = null;
         private String[] links = null;
-
-        private class Work extends Thread {
-            @Override
-            public void run() {
-                super.run();
-
-            }
-        }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -231,19 +220,7 @@ public class AnimeDownloader extends JFrame {
                     }
 
                 } catch (IOException e) {
-                    final JDialog dialog = new JDialog();
-                    dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
-                    dialog.add(new JLabel("Impossibile trovare una serie Anime all'indirizzo specificato"));
-                    JButton b = new JButton("OK!");
-                    b.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent actionEvent) {
-                            dialog.setVisible(false);
-                        }
-                    });
-                    dialog.add(b);
-                    dialog.setVisible(true);
-                    dialog.pack();
+                    JOptionPane.showMessageDialog(panel1, "Impossibile trovare una serie Anime all'indirizzo specificato");
                     linkEdit.setBackground(Color.RED);
                 }
                 working = false;
@@ -281,9 +258,50 @@ public class AnimeDownloader extends JFrame {
                 f.setVisible(true);
             }
             if (actionEvent.getSource() == downloadButton && !ParseAnimeWorld.isDownloading()) {
+                //richiesta posizione per il download
                 DownloadSelector ds = new DownloadSelector();
                 String path = ds.getPath();
-                //todo: inserire lo slider per decidedre quanti episodi scaricare... (da creare nel JTuxComponent)
+                System.out.println("PATH: " + path);
+                //richiesta quali episodi da scaricare
+                JRangePicker r = new JRangePicker(1, parser.getEpisodes());
+                JOptionPane.showMessageDialog(panel1, r, "Selezionare quali episodi scaricare!", JOptionPane.INFORMATION_MESSAGE);
+                final int[] range = r.getRange();
+                //download degli episodi
+                ParseAnimeWorld.EpisodesDownloader ed = new ParseAnimeWorld.EpisodesDownloader(links, path, parser.getAnimeName(), range[0], range[1]);
+                ed.start();
+                findEpisodesButton.setEnabled(false);
+                try {
+                    Thread.sleep(500); //per dare tempo al download di avviarsi
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        downloadButton.setEnabled(false);
+                        progressBar1.setString("Downloading...");
+                        progressBar1.setStringPainted(true);
+                        while (ParseAnimeWorld.isDownloading()) {
+                            progressBar1.setValue((ParseAnimeWorld.getCurrentDownloading() - range[0] + 1) * 100 / (range[1] - range[0] + 1));
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        findEpisodesButton.setEnabled(true);
+                        progressBar1.setString("Finito!!");
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        progressBar1.setStringPainted(false);
+                        progressBar1.setValue(0);
+                        downloadButton.setEnabled(true);
+                    }
+                }.start();
             }
         }
 

@@ -6,7 +6,7 @@
 
     <groupId>com.tuxdave</groupId>
     <artifactId>AnimeDownloader</artifactId>
-    <version>0.5.1-ALPHA</version>
+    <version>1</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -22,9 +22,15 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>forms_rt</artifactId>
+            <version>7.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.TuxDave</groupId>
             <artifactId>JTuxObjects</artifactId>
-            <version>2.1</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

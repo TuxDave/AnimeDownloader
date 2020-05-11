@@ -14,6 +14,7 @@ public class ParseAnimeWorld{
     private String url;
     private String[] urlsEpisodes;
     private String[] downloadLinks = null;
+    private String animeName;
     private int nEpisodes;
     private int current;
     private Document page;
@@ -28,6 +29,15 @@ public class ParseAnimeWorld{
         nEpisodes = getEpisodesNumber();
         current = 0;
         urlsEpisodes = getOtherEpisodesLink();
+        //parse anime name
+        Elements es = page.getElementsByTag("h2");
+        for(Element e : es){
+            animeName = e.getElementsByAttribute("data-jtitle").html();
+        }
+    }
+
+    public String getAnimeName(){
+        return animeName;
     }
 
     private int getEpisodesNumber(){
@@ -116,6 +126,16 @@ public class ParseAnimeWorld{
         int start = 0;
         int stop = 0;
 
+        /*
+         * questa deve ricevere un array con tutti i link degli episodi da scaricare,
+         *                       una path per il download,
+         *                       un nome per salvare gli episodi
+         *                       **Opzionalmente un punto dacui iniziare ed uno al quale finire
+         * */
+        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName){
+            this(_episodeLinks, _downloadFolderPath, _animeName, 0, _episodeLinks.length);
+        }
+
         public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName, int _start, int _stop){
             super();
             currentDownloading = 0;//azzera il counter dei downloads
@@ -137,9 +157,6 @@ public class ParseAnimeWorld{
             }else{
                 stop = nEpisodes;
             }
-        }
-        public EpisodesDownloader(String[] _episodeLinks, String _downloadFolderPath, String _animeName){
-            this(_episodeLinks, _downloadFolderPath, _animeName, 0, _episodeLinks.length);
         }
 
         @Override
