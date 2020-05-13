@@ -1,4 +1,4 @@
-package com.tuxdave;
+package com.tuxdave.AnimeDownloader;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

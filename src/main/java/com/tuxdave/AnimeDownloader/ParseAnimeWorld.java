@@ -1,4 +1,4 @@
-package com.tuxdave;
+package com.tuxdave.AnimeDownloader;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;

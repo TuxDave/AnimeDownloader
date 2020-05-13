@@ -64,7 +64,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.tuxdave.AnimeDownloader</mainClass>
+                            <mainClass>com.tuxdave.AnimeDownloader.AnimeDownloader</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
