@@ -8,6 +8,14 @@
     <artifactId>AnimeDownloader</artifactId>
     <version>1</version>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub TuxDave Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/TuxDave/AnimeDownloader</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
