@@ -6,7 +6,7 @@
 
     <groupId>com.tuxdave</groupId>
     <artifactId>AnimeDownloader</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <distributionManagement>
         <repository>
@@ -64,7 +64,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.tuxdave.AnimeDownloader.AnimeDownloader</mainClass>
+                            <mainClass>com.tuxdave.AnimeDownloader.graphics.AnimeDownloader</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

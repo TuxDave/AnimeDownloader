@@ -1,8 +1,9 @@
-package com.tuxdave.AnimeDownloader;
+package com.tuxdave.AnimeDownloader.graphics;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.tuxdave.AnimeDownloader.logic.ParseAnimeWorld;
 import com.tuxdave.JComponents.JPlaceHolderTextField;
 import com.tuxdave.JComponents.JRangePicker;
 

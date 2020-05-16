@@ -1,4 +1,4 @@
-package com.tuxdave.AnimeDownloader;
+package com.tuxdave.AnimeDownloader.logic;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ParseAnimeWorld{
@@ -35,13 +36,35 @@ public class ParseAnimeWorld{
             animeName = e.getElementsByAttribute("data-jtitle").html();
         }
     }
+    public ParseAnimeWorld(){
+        url = "";
+        page = new Document("");
+        nEpisodes = 0;
+        current = 0;
+        urlsEpisodes = new String[0];
+        animeName = "";
+    }
 
     public String getAnimeName(){
         return animeName;
     }
 
     private int getEpisodesNumber(){
-        int ep = Integer.parseInt(page.body().getElementsByTag("font").html());
+        String temp = page.body().getElementsByTag("font").html();
+        temp = temp.replace(" ","");
+        if(temp.contains("+")){
+            String temp1 = "";
+            for(char c : temp.toCharArray()){
+                if(c != '+'){
+                    temp1 += c;
+                }else{
+                    break;
+                }
+            }
+            temp = temp1;
+        }
+        temp = temp.replaceAll("[^0-9]","");
+        int ep = Integer.parseInt(temp);
         return ep;
     }
 
@@ -53,10 +76,14 @@ public class ParseAnimeWorld{
         String[] s = new String[nEpisodes];
         Elements els = page.getElementsByAttributeValue("data-title","0");
         for(int i = 0; i < nEpisodes+1; i++){
-            if(i > 1){
-                s[i-1] = "https://www.animeworld.tv" + els.get(i).attr("href");
-            }else{
-                s[0] = "https://www.animeworld.tv" + els.get(i).attr("href");
+            try {
+                if (i > 1) {
+                    s[i - 1] = "https://www.animeworld.tv" + els.get(i).attr("href");
+                } else {
+                    s[0] = "https://www.animeworld.tv" + els.get(i).attr("href");
+                }
+            }catch (IndexOutOfBoundsException e){
+                s[i-1] = null;
             }
         }
         return s;
@@ -96,6 +123,85 @@ public class ParseAnimeWorld{
     }
     public static int getCurrentDownloading(){
         return currentDownloading + 1;
+    }
+
+    public static class AnimeSearcher{
+        private String keyWord;
+        private Anime[] found; //willl be returned at final
+        private Document animeFoundPage;
+
+        //for external ask
+        private static boolean searching = false;
+        private static int animeFoundNumber = 0;
+        private static int currentFound = 0;
+        private static boolean allreadyFound = false;
+
+        public AnimeSearcher(String _keyWord) throws IOException {
+            keyWord = _keyWord;
+            animeFoundPage = Jsoup.connect("https://www.animeworld.tv/search?keyword=" + keyWord.replace(" ","+")).userAgent("Mozilla").get();
+        }
+
+        public void search() throws IOException {
+            found = null;
+            allreadyFound = false;
+
+            final Elements[] titles = new Elements[1];
+            titles[0] = animeFoundPage.getElementsByAttributeValue("class", "film-list");
+            titles[0] = titles[0].get(0).getElementsByAttributeValue("class","item");
+            animeFoundNumber = titles[0].size();
+            found = new Anime[animeFoundNumber];
+
+            //start searching
+            searching = true;
+            currentFound = 0;
+
+            Thread t = new Thread(){
+                @Override
+                public synchronized void start() {
+                    super.start();
+                    for(int i = 0; i < animeFoundNumber; i++){
+                        currentFound = i;
+                        ParseAnimeWorld p = new ParseAnimeWorld(); //si collega alla pagina dell'anime trovato
+                        try {
+                            p = new ParseAnimeWorld(titles[0].get(i).getElementsByAttribute("href").attr("href"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            found[i] = new Anime(
+                                    titles[0].get(i).getElementsByAttributeValue("class","name").html(),//nome anime
+                                    p.getEpisodesNumber(),//numero episodi
+                                    titles[0].get(0).getElementsByTag("img").attr("src") //percorso immagine
+                            );
+                        } catch (MalformedURLException e) {
+                            found[i] = null;
+                        }
+                    }
+                    allreadyFound = true;
+                    searching = false;
+                }
+            };
+            t.start();
+        }
+
+        public static boolean isSearching() {
+            return searching;
+        }
+        public static int getAnimeFoundNumber(){
+            return animeFoundNumber;
+        }
+        public static int getCurrentFound(){
+            return currentFound;
+        }
+
+        public Anime[] getFound(){
+            if(!searching && allreadyFound){//si deve aspettare la fine della ricerca o almeno di averne effettuata almeno una
+                return found;
+            }else{
+                return null;
+            }
+        }
     }
 
     private class Work extends Thread{
