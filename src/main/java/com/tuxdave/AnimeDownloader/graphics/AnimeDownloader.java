@@ -34,6 +34,7 @@ public class AnimeDownloader extends JFrame {
     private JButton findEpisodesButton;
     private JScrollPane scrollPane;
     private JTextPane info4;
+    private JButton searchButton;
 
     private boolean working = false;
 
@@ -55,19 +56,14 @@ public class AnimeDownloader extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(5, 3, new Insets(2, 2, 2, 2), -1, -1));
         panel1.setBackground(new Color(-4390921));
         Font panel1Font = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, panel1.getFont());
         if (panel1Font != null) panel1.setFont(panel1Font);
-        linkEdit = new JPlaceHolderTextField();
-        Font linkEditFont = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, linkEdit.getFont());
-        if (linkEditFont != null) linkEdit.setFont(linkEditFont);
-        linkEdit.setPlaceHolder("https://www.animeworld.tv/...");
-        panel1.add(linkEdit, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         info2 = new JLabel();
         Font info2Font = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, info2.getFont());
         if (info2Font != null) info2.setFont(info2Font);
-        info2.setText("Inserisci il link della serie Anime:");
+        info2.setText("Inserisci il link della serie Anime o cerca una serie tramite il bottone:");
         panel1.add(info2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         info1 = new JLabel();
         info1.setBackground(new Color(-1));
@@ -83,38 +79,39 @@ public class AnimeDownloader extends JFrame {
         if (info3Font != null) info3.setFont(info3Font);
         info3.setForeground(new Color(-9613313));
         info3.setText("https://www.animeworld.tv/");
-        panel1.add(info3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panel1.add(info3, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         saveButton = new JButton();
         Font saveButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, saveButton.getFont());
         if (saveButtonFont != null) saveButton.setFont(saveButtonFont);
         saveButton.setText("Salva links su file!");
-        panel2.add(saveButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(saveButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         copiaButton = new JButton();
         Font copiaButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, copiaButton.getFont());
         if (copiaButtonFont != null) copiaButton.setFont(copiaButtonFont);
         copiaButton.setText("Copia!");
-        panel2.add(copiaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(copiaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         downloadButton = new JButton();
         downloadButton.setEnabled(false);
         Font downloadButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadButton.getFont());
         if (downloadButtonFont != null) downloadButton.setFont(downloadButtonFont);
         downloadButton.setHideActionText(false);
         downloadButton.setText("Download Episodi");
-        panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         info4 = new JTextPane();
         info4.setBackground(new Color(-4390921));
+        info4.setEditable(false);
         info4.setText("Info: ");
-        panel2.add(info4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 300), new Dimension(150, 50), null, 0, false));
+        panel2.add(info4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 300), new Dimension(150, 50), null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         progressBar1 = new JProgressBar();
         panel1.add(progressBar1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         findEpisodesButton = new JButton();
         findEpisodesButton.setText("Trova Episodi!");
-        panel1.add(findEpisodesButton, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(findEpisodesButton, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         scrollPane = new JScrollPane();
         panel1.add(scrollPane, new GridConstraints(3, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(400, 500), null, null, 0, false));
         showLinkArea = new JTextArea();
@@ -125,6 +122,15 @@ public class AnimeDownloader extends JFrame {
         showLinkArea.setOpaque(true);
         showLinkArea.setText("");
         scrollPane.setViewportView(showLinkArea);
+        linkEdit = new JPlaceHolderTextField();
+        Font linkEditFont = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, linkEdit.getFont());
+        if (linkEditFont != null) linkEdit.setFont(linkEditFont);
+        linkEdit.setPlaceHolder("https://www.animeworld.tv/...");
+        panel1.add(linkEdit, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(290, -1), null, 0, false));
+        searchButton = new JButton();
+        searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/search.png")));
+        searchButton.setText("");
+        panel1.add(searchButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(19, 19), new Dimension(19, 19), new Dimension(19, 19), 0, false));
     }
 
     /**
@@ -160,6 +166,7 @@ public class AnimeDownloader extends JFrame {
         add(panel1);
         setResizable(false);
         setTitle("AnimeDownloader");
+        System.out.println(linkEdit.getBounds().toString());
     }
 
     {//insert listeners
@@ -176,6 +183,7 @@ public class AnimeDownloader extends JFrame {
         linkEdit.addMouseListener(listener);
         info3.addMouseListener(listener);
         showLinkArea.addMouseListener(listener);
+        searchButton.addMouseListener(listener);
     }
 
     private class AnimeDownloaderListener implements ActionListener, MouseListener {
@@ -211,8 +219,13 @@ public class AnimeDownloader extends JFrame {
                                 }
                                 links = parser.getAllEpisodeDownloadLink();
                                 showLinkArea.setText("");
+                                int c = 1;
                                 for (String s1 : links) {
-                                    showLinkArea.append(s1 + "\n");
+                                    if (s1.equals("")) {
+                                        JOptionPane.showMessageDialog(panel1, "Impossibile visualizzare episodio " + c + " da animeworld.tv\nvisualizzarlo su altri servizi di streaming/download");
+                                    } else
+                                        showLinkArea.append(s1 + "\n");
+                                    c++;
                                 }
                                 progressBar1.setValue(100);
                                 downloadButton.setEnabled(true);
@@ -348,6 +361,8 @@ public class AnimeDownloader extends JFrame {
                 info4.setText("Info: Indica la percentuale di completamento di download dei link o degli episodi.");
             } else if (mouseEvent.getSource() == showLinkArea) {
                 info4.setText("Info: Qui compariranno i link per il download di tutti gli episodi dell'anime indicato sopra, possono essere copiati, salvati o scaricati sul computer.");
+            } else if (mouseEvent.getSource() == searchButton) {
+                info4.setText("Info: Apre una finestra dalla quale è possibile cercare una seria anime tra il catalogo disponibile su AnimeWorld.tv");
             }
         }
 
@@ -366,3 +381,4 @@ public class AnimeDownloader extends JFrame {
         a.pack();
     }
 }
+//todo: implementare il bottone di browse

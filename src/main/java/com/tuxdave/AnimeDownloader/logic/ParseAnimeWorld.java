@@ -24,7 +24,7 @@ public class ParseAnimeWorld{
     static private boolean downloading = false;
     static private int currentDownloading = 0;
 
-    public ParseAnimeWorld(String _url)throws IOException {
+    public ParseAnimeWorld(String _url)throws IOException, IllegalArgumentException {
         url = _url;
         page = Jsoup.connect(url).userAgent("Mozilla").get();
         nEpisodes = getEpisodesNumber();
@@ -93,14 +93,32 @@ public class ParseAnimeWorld{
         return scraping;
     }
 
-    public String getCurrentDownloadLink(){
+    public String getCurrentDownloadLink() {
         Elements es = page.body().getElementsByAttributeValue("id","downloadLink");
+        String r = "";
         for(Element e : es){
             if(e.html().contains("Alternativo") || e.html().contains("Alternative")){
-                return e.attr("href");
+                r = e.attr("href");
+            }else{
+                r = "";
             }
         }
-        return "";
+        return r;
+    }
+
+    public String getEpisodedLength(){
+        Element e = page.body().getElementsByAttributeValue("class","meta col-sm-12").get(1);
+        Elements es = e.getElementsByTag("dd");
+        String r = "";
+        for(Element e1 : es){
+            if(e.html().contains("min")){
+                return e.html();
+            }
+        }
+        if(r.equals("")){
+            r = "24min";
+        }
+        return r;
     }
 
     public int getCurrent(){
@@ -172,7 +190,9 @@ public class ParseAnimeWorld{
                             found[i] = new Anime(
                                     titles[0].get(i).getElementsByAttributeValue("class","name").html(),//nome anime
                                     p.getEpisodesNumber(),//numero episodi
-                                    titles[0].get(0).getElementsByTag("img").attr("src") //percorso immagine
+                                    p.getEpisodedLength(),//Lunghezza episodi
+                                    titles[0].get(i).getElementsByTag("img").attr("src"), //percorso immagine
+                                    titles[0].get(i).getElementsByTag("a").get(0).attr("href")//link alla serie anime
                             );
                         } catch (MalformedURLException e) {
                             found[i] = null;
@@ -215,7 +235,7 @@ public class ParseAnimeWorld{
                     ParseAnimeWorld parser = new ParseAnimeWorld(urlsEpisodes[current]);
                     downloadLinks[current] = parser.getCurrentDownloadLink();
                     System.out.println("[INFO] - Episodio " + Integer.toString(current + 1) + " trovato!");
-                } catch (IOException e) {
+                } catch (Exception ignored) {
                 }
             }
             scraping = false;

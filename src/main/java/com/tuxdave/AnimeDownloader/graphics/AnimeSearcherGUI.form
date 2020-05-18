@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.tuxdave.AnimeDownloader.graphics.AnimeSearcherGUI">
+  <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="355" height="242"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="7694d" class="com.tuxdave.JComponents.JPlaceHolderTextField" binding="searchEdit">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <placeHolder value="Search..."/>
+        </properties>
+      </component>
+      <component id="fab91" class="javax.swing.JComboBox" binding="chooseBox1">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="dd78d" class="javax.swing.JButton" binding="searchButton">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="19" height="19"/>
+            <preferred-size width="19" height="19"/>
+            <maximum-size width="19" height="19"/>
+          </grid>
+        </constraints>
+        <properties>
+          <icon value="icons/search.png"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <nested-form id="4a435" form-file="com/tuxdave/AnimeDownloader/graphics/VisualAnimeForm.form" binding="visualAnime1">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </nested-form>
+      <component id="d9db5" class="javax.swing.JButton" binding="downloadButton">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="20" height="20"/>
+            <preferred-size width="20" height="20"/>
+            <maximum-size width="20" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <icon value="icons/spunta.png"/>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
