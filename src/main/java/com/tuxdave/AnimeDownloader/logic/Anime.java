@@ -48,6 +48,6 @@ public class Anime {
     //"dunder" methods
     @Override
     public String toString() {
-        return name + " - " + episodeNumber;
+        return name;
     }
 }

@@ -3,6 +3,7 @@ package com.tuxdave.AnimeDownloader.graphics;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.tuxdave.AnimeDownloader.logic.Anime;
 import com.tuxdave.AnimeDownloader.logic.ParseAnimeWorld;
 import com.tuxdave.JComponents.JPlaceHolderTextField;
 import com.tuxdave.JComponents.JRangePicker;
@@ -166,7 +167,6 @@ public class AnimeDownloader extends JFrame {
         add(panel1);
         setResizable(false);
         setTitle("AnimeDownloader");
-        System.out.println(linkEdit.getBounds().toString());
     }
 
     {//insert listeners
@@ -184,6 +184,7 @@ public class AnimeDownloader extends JFrame {
         info3.addMouseListener(listener);
         showLinkArea.addMouseListener(listener);
         searchButton.addMouseListener(listener);
+        searchButton.addActionListener(listener);
     }
 
     private class AnimeDownloaderListener implements ActionListener, MouseListener {
@@ -275,7 +276,6 @@ public class AnimeDownloader extends JFrame {
                 //richiesta posizione per il download
                 DownloadSelector ds = new DownloadSelector();
                 String path = ds.getPath();
-                System.out.println("PATH: " + path);
                 //richiesta quali episodi da scaricare
                 JRangePicker r = new JRangePicker(1, parser.getEpisodes());
                 JOptionPane.showMessageDialog(panel1, r, "Selezionare quali episodi scaricare!", JOptionPane.INFORMATION_MESSAGE);
@@ -316,6 +316,15 @@ public class AnimeDownloader extends JFrame {
                         downloadButton.setEnabled(true);
                     }
                 }.start();
+            }
+            if (actionEvent.getSource() == searchButton) {
+                AnimeSearcherGUI searcher = new AnimeSearcherGUI();
+                JOptionPane.showMessageDialog(panel1, searcher, "Cerca e Seleziona un anime...", JOptionPane.INFORMATION_MESSAGE);
+                Anime anime = searcher.getSelected();
+                if (anime.getLink() != null)
+                    linkEdit.setText(anime.getLink().toString());
+                else
+                    linkEdit.setText("");
             }
         }
 
@@ -381,4 +390,3 @@ public class AnimeDownloader extends JFrame {
         a.pack();
     }
 }
-//todo: implementare il bottone di browse

@@ -111,8 +111,9 @@ public class ParseAnimeWorld{
         Elements es = e.getElementsByTag("dd");
         String r = "";
         for(Element e1 : es){
-            if(e.html().contains("min")){
-                return e.html();
+            if(e1.html().contains("min")){
+                System.out.println();
+                return e1.html();
             }
         }
         if(r.equals("")){
@@ -154,12 +155,15 @@ public class ParseAnimeWorld{
         private static int currentFound = 0;
         private static boolean allreadyFound = false;
 
-        public AnimeSearcher(String _keyWord) throws IOException {
+        public AnimeSearcher(String _keyWord)throws IOException {
             keyWord = _keyWord;
+            if(keyWord.equals("")){
+                throw new IOException("Inserire una parola chiave da cercare (come il nome di una serie Anime)");
+            }
             animeFoundPage = Jsoup.connect("https://www.animeworld.tv/search?keyword=" + keyWord.replace(" ","+")).userAgent("Mozilla").get();
         }
 
-        public void search() throws IOException {
+        public void search(){
             found = null;
             allreadyFound = false;
 
@@ -173,10 +177,10 @@ public class ParseAnimeWorld{
             searching = true;
             currentFound = 0;
 
-            Thread t = new Thread(){
+            new Thread(){
                 @Override
-                public synchronized void start() {
-                    super.start();
+                public void run() {
+                    super.run();
                     for(int i = 0; i < animeFoundNumber; i++){
                         currentFound = i;
                         ParseAnimeWorld p = new ParseAnimeWorld(); //si collega alla pagina dell'anime trovato
@@ -201,8 +205,7 @@ public class ParseAnimeWorld{
                     allreadyFound = true;
                     searching = false;
                 }
-            };
-            t.start();
+            }.start();
         }
 
         public static boolean isSearching() {
