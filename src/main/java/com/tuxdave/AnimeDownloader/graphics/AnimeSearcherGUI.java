@@ -147,6 +147,9 @@ public class AnimeSearcherGUI extends JPanel {
                         }
                     }
                 }.start();
+                //per portare in primo piano
+                fTemp.toFront();
+                fTemp.repaint();
             } else if (actionEvent.getSource() == chooseBox1) {
                 visualAnime1.setAnime((Anime) chooseBox1.getSelectedItem());
                 System.out.println(((Anime) chooseBox1.getSelectedItem()).getEpisodeLength());

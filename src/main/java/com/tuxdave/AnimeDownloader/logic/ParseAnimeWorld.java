@@ -304,5 +304,5 @@ public class ParseAnimeWorld{
             currentDownloading = 0;
         }
     }
-
+//todo:Inserire l'immagine downlaod
 }

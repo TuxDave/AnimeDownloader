@@ -99,6 +99,7 @@ public class AnimeDownloader extends JFrame {
         Font downloadButtonFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, downloadButton.getFont());
         if (downloadButtonFont != null) downloadButton.setFont(downloadButtonFont);
         downloadButton.setHideActionText(false);
+        downloadButton.setIcon(new ImageIcon(getClass().getResource("/icons/download.png")));
         downloadButton.setText("Download Episodi");
         panel2.add(downloadButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         info4 = new JTextPane();
