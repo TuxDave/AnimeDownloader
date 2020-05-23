@@ -13,7 +13,6 @@ Sul sito riportato sopra si possono trovare pressochè qualunque Anime SUB-ITA e
 ## Problemi
 - Se non si utilizza correttamente l'interfaccia grafica si rischia di mandare in crash il programma e sarà necessario un riavvio di esso (irrobustirerò i controlli per evitare questo);
 - La grafica, se pur comoda ed intuitiva, risulta orrenda alla vista, una review grafica arriverà presto.
-- Se si tenta di cercare un anime che nel nome ha un carattere speciale (es: Re:Zero Kara...) la ricerca fallisce.
 
 ## Build (Maven richiesto)
     cd animeworld-downloader-master/
