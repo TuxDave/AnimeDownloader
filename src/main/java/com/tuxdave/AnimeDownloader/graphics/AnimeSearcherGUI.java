@@ -113,7 +113,7 @@ public class AnimeSearcherGUI extends JPanel {
                 searcher[0].search();
 
                 //costruzione pannello temporaneo
-                final JFrame fTemp = new JFrame();//todo: fare in modo che questo frame venga davanti
+                final JFrame fTemp = new JFrame();
                 final JProgressBar prog = new JProgressBar();
                 prog.setValue(0);
                 prog.setString("Searching...");

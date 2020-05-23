@@ -27,3 +27,22 @@ Se java è installato e configurato correttamente per quanto riguarda le variabi
 ### Mac/Linux
 
     java -jar AnimeDownloader.jar
+## Utilizzo
+Il programma ha 2 funzioni principali e 2 metodi per utilizzarle:
+### Ricerca Anime
+- **Ricerca Anime tramite link (sconsigliata):**
+Per utilizzare questo metodo è necessario recarsi sul sito animeworld.tv e ricercare manualmente l'anime desiderato tra il catalogo. Una volta sulla pagina principale della serie sarà sufficiente copiare negli appunti l'URL ed incollarlo nella seconda casella di testo, quella con accanto una lente di ingrandimento.
+- **Ricerca Anime per parola chiave (consigliata):**
+Questa funzionllità permette di cercare un qualsiasi anime nella libreria disponibile e selezionarlo per eseguire altre azioni.
+Per utilizzarla è suffuciente premere il bottone con l'icone della lente di ingrandimento accanto alla seconda casella di testo, successivamente verrà aperta una finestra di dialogo dove sarà possibile cercare una serie animata tramite una parola chiave che richiama il titolo e selezionare il risultato desiterato tra una lista di di Anime corrispondenti alla ricerca.
+Per facilitare una selezione corretta, sotto al campo per indicare quale serie scegliere sono disponibili delle informazioni come l'immagine di copertina, il numero di episodi e la durata di essi.
+Una volta scelto premere "OK" e si potrà passare alla fase successiva.
+### Trova e Scarica gli episodi
+- **Trova gli episodi:**
+Tramite il bottone "Trova Episodi", dopo aver selezionato l'anime desiderato, permette di trovare i links ai quali sono direttamente collegati tutti gli episodi, riportandoli in un box di testo.
+Dopo di che questi links possono essere copiati negli appunti per essere incollati oppure salvati in un file di testo semplice.
+- **Scaricare gli Episodi:**
+Una volta che tutti gli episodi sono stati trovati, il bottone "Download Episodi" viene abilitato e diventa possibile scaricare gli episodi.
+Seguendo le richieste del programma, verrà chiesto dove salvare gli episodi e quali scaricare (tramite un selettore si range che vi permette di sceglierne solo alcuni).
+
+Tutti i processi che non risultano istantanei nel loro completamento hanno a disposizione una progressBar per indicare la percentuale di completamento,
