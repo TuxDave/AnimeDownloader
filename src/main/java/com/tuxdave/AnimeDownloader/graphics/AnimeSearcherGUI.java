@@ -41,10 +41,7 @@ public class AnimeSearcherGUI extends JPanel {
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
-        searchEdit = new JPlaceHolderTextField();
-        Font searchEditFont = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, searchEdit.getFont());
-        if (searchEditFont != null) searchEdit.setFont(searchEditFont);
-        searchEdit.setPlaceHolder("Search...");
+        searchEdit = new com.tuxdave.JComponents.JPlaceHolderTextField();
         panel1.add(searchEdit, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(250, -1), null, null, 0, false));
         chooseBox1 = new JComboBox();
         Font chooseBox1Font = this.$$$getFont$$$("Ubuntu", Font.BOLD, 14, chooseBox1.getFont());

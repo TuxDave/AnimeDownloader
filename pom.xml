@@ -35,10 +35,11 @@
             <version>7.0.3</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
+        <dependency><!--Importing JTuxObjects-->
             <groupId>com.TuxDave</groupId>
             <artifactId>JTuxObjects</artifactId>
-            <version>4.1.3</version>
+            <version>4.1.4</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

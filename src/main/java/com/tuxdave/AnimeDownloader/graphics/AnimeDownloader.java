@@ -124,10 +124,7 @@ public class AnimeDownloader extends JFrame {
         showLinkArea.setOpaque(true);
         showLinkArea.setText("");
         scrollPane.setViewportView(showLinkArea);
-        linkEdit = new JPlaceHolderTextField();
-        Font linkEditFont = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, linkEdit.getFont());
-        if (linkEditFont != null) linkEdit.setFont(linkEditFont);
-        linkEdit.setPlaceHolder("https://www.animeworld.tv/...");
+        linkEdit = new com.tuxdave.JComponents.JPlaceHolderTextField();
         panel1.add(linkEdit, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(290, -1), null, 0, false));
         searchButton = new JButton();
         searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/search.png")));
