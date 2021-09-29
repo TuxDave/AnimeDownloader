@@ -9,6 +9,8 @@ import com.tuxdave.JComponents.JPlaceHolderTextField;
 import com.tuxdave.JComponents.JRangePicker;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Locale;
 
 public class AnimeDownloader extends JFrame {
     private JPanel panel1;
@@ -124,7 +127,10 @@ public class AnimeDownloader extends JFrame {
         showLinkArea.setOpaque(true);
         showLinkArea.setText("");
         scrollPane.setViewportView(showLinkArea);
-        linkEdit = new com.tuxdave.JComponents.JPlaceHolderTextField();
+        linkEdit = new JPlaceHolderTextField();
+        Font linkEditFont = this.$$$getFont$$$("Ubuntu", Font.PLAIN, 14, linkEdit.getFont());
+        if (linkEditFont != null) linkEdit.setFont(linkEditFont);
+        linkEdit.setPlaceHolder("https://www.animeworld.tv/...");
         panel1.add(linkEdit, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(290, -1), null, 0, false));
         searchButton = new JButton();
         searchButton.setIcon(new ImageIcon(getClass().getResource("/icons/search.png")));
@@ -132,9 +138,7 @@ public class AnimeDownloader extends JFrame {
         panel1.add(searchButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(19, 19), new Dimension(19, 19), new Dimension(19, 19), 0, false));
     }
 
-    /**
-     * @noinspection ALL
-     */
+    /** @noinspection ALL */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
         if (currentFont == null) return null;
         String resultName;
@@ -148,12 +152,13 @@ public class AnimeDownloader extends JFrame {
                 resultName = currentFont.getName();
             }
         }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
 
-    /**
-     * @noinspection ALL
-     */
+    /** @noinspection ALL */
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
@@ -220,7 +225,7 @@ public class AnimeDownloader extends JFrame {
                                 showLinkArea.setText("");
                                 int c = 1;
                                 for (String s1 : links) {
-                                    if (s1.equals("")) {
+                                    if (s1 == null || s1.equals("")) {
                                         JOptionPane.showMessageDialog(panel1, "Impossibile visualizzare episodio " + c + " da animeworld.tv\nvisualizzarlo su altri servizi di streaming/download");
                                     } else
                                         showLinkArea.append(s1 + "\n");

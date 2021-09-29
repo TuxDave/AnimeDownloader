@@ -8,26 +8,17 @@
     <artifactId>AnimeDownloader</artifactId>
     <version>1.2.1</version>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub TuxDave Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/TuxDave/AnimeDownloader</url>
-        </repository>
-    </distributionManagement>
-
     <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
-            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.13.1</version>
-            <scope>compile</scope>
+            <version>1.14.2</version>
         </dependency>
         <dependency>
             <groupId>com.intellij</groupId>
@@ -35,10 +26,10 @@
             <version>7.0.3</version>
             <scope>compile</scope>
         </dependency>
-        <dependency><!--Importing JTuxObjects-->
-            <groupId>com.TuxDave</groupId>
+        <dependency>
+            <groupId>com.tuxdave</groupId>
             <artifactId>JTuxObjects</artifactId>
-            <version>4.1.4</version>
+            <version>4.1.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -16,6 +16,7 @@ Sul sito riportato sopra si possono trovare pressochè qualunque Anime SUB-ITA e
 
 ## Build (Maven richiesto)
     cd animeworld-downloader-master/
+    mvn install:install-file -Dfile=lib/JTuxObjects-4.1.5-jar-with-dependencies.jar -DgroupId=com.tuxdave -DartifactId=JTuxObjects -Dversion=4.1.5 -Dpackaging=jar
     mvn packege
 ## Run (Java7+ richiesto)
 Per comodità, si può scaricare una versione precompilata del programma [qui](https://github.com/TuxDave/AnimeDownloader/releases) selezionando l'ultima versione e scaricando il file con estensione JAR
